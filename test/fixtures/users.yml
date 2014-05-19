@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  email: MyString
+  password_digest: MyString
+  score: 1
+  games_played: 1
+  games_won: 1
+  games_lost: 1
+  games_drawn: 1
+
+two:
+  email: MyString
+  password_digest: MyString
+  score: 1
+  games_played: 1
+  games_won: 1
+  games_lost: 1
+  games_drawn: 1

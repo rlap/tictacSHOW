@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  position: MyString
+  value: 1
+  game: 
+
+two:
+  position: MyString
+  value: 1
+  game: 
