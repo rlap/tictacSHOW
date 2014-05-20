@@ -10,8 +10,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/new
-  # GET /users/new.json
+# Sign up page
   def new
     @user = User.new
 
@@ -21,14 +20,13 @@ class UsersController < ApplicationController
     end
   end
 
-  # POST /users
-  # POST /users.json
+# Sign up
   def create
     @user = User.new(params[:user])
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to users_path, notice: 'User was successfully created.' }
+        format.html { redirect_to new_session_path, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "new" }

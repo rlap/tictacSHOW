@@ -1,9 +1,25 @@
 class GamesController < ApplicationController
 
-  # GET /games/1
-  # GET /games/1.json
+# Show all games 
+  def index
+    @games = Game.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @boards }
+    end
+  end
+
+# Show game board
   def show
     @game = Game.find(params[:id])
+    @player1_moves = @game.moves.where(:user_id => @game.player1_id).map do |move|
+      move.position.to_sym
+    end
+    @player2_moves = @game.moves.where(:user_id => @game.player2_id).map do |move|
+      move.position.to_sym
+    end
+    @current_board = @player1_moves + @player2_moves
 
     respond_to do |format|
       format.html # show.html.erb
@@ -22,11 +38,6 @@ class GamesController < ApplicationController
     end
   end
 
-  # GET /games/1/edit
-  def edit
-    @game = Game.find(params[:id])
-  end
-
   # POST /games
   # POST /games.json
   def create
@@ -38,22 +49,6 @@ class GamesController < ApplicationController
         format.json { render json: @game, status: :created, location: @game }
       else
         format.html { render action: "new" }
-        format.json { render json: @game.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /games/1
-  # PUT /games/1.json
-  def update
-    @game = Game.find(params[:id])
-
-    respond_to do |format|
-      if @game.update_attributes(params[:game])
-        format.html { redirect_to @game, notice: 'Game was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end

@@ -1,5 +1,5 @@
 Tictactoe::Application.routes.draw do
-  root :to => 'users#index'
+  root :to => 'users#new'
 
   resources :boards
   resources :games

@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
   attr_accessible :draw, :losing_user_id, :winning_user_id, :player1_id, :player2_id
   has_and_belongs_to_many :users
-  has_one :move
+  has_many :moves
 
   BOARD = [:a1, :a2, :a3, :b1, :b2, :b3, :c1, :c2, :c3]
   WINNING_COMBOS = [
@@ -59,6 +59,14 @@ class Game < ActiveRecord::Base
       true
     else 
       false
+    end
+  end
+
+  # Define current board
+  def current_board
+    @board = []
+    Move.where(:game_id => 2).each do |move|
+      @board << move.position.to_sym
     end
   end
 
