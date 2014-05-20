@@ -12,12 +12,8 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :player1_id %><br />
-    <%= f.number_field :player1_id %>
-  </div>
-  <div class="field">
-    <%= f.label :player2_id %><br />
-    <%= f.number_field :player2_id %>
+    <%= f.label :player2_id, "Play against:" %><br />
+    <%= f.select :player2_id , options_from_collection_for_select(User.all, :id, :email)%>
   </div>
   <div class="actions">
     <%= f.submit %>

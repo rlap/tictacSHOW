@@ -13,18 +13,49 @@ class GamesController < ApplicationController
 # Show game board
   def show
     @game = Game.find(params[:id])
-    @player1_moves = @game.moves.where(:user_id => @game.player1_id).map do |move|
-      move.position.to_sym
+
+    if @game.moves.where(:user_id => @game.player1_id)
+      @player1_moves = @game.moves.where(:user_id => @game.player1_id).map do |move|
+        move.position.to_sym
+      end
+    else
+      @player1_moves = []
     end
-    @player2_moves = @game.moves.where(:user_id => @game.player2_id).map do |move|
-      move.position.to_sym
+
+    if @game.moves.where(:user_id => @game.player2_id)
+      @player2_moves = @game.moves.where(:user_id => @game.player2_id).map do |move|
+        move.position.to_sym
+      end
+    else
+      @player2_moves = []
     end
+
     @current_board = @player1_moves + @player2_moves
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @game }
+    if @game.game_over
+      render action: "game_finished"
+    else
+
+      if @game.moves.length != 0 && @game.moves.last.user_id == current_user.id
+        position = (Game::BOARD - @current_board).sample
+        @game.moves.create(
+          :position => position,
+  # Computer assumed to be user '1'
+          :user_id => 1,
+          :game_id => @game.id
+          )
+      end
+
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @game }
+      end
     end
+  end
+
+  # Game over 
+  def game_finished
+    render "game_finished"
   end
 
   # GET /games/new
@@ -42,7 +73,7 @@ class GamesController < ApplicationController
   # POST /games.json
   def create
     @game = Game.new(params[:game])
-
+    @game.player1_id = current_user.id
     respond_to do |format|
       if @game.save
         format.html { redirect_to @game, notice: 'Game was successfully created.' }

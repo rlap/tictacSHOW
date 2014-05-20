@@ -17,57 +17,42 @@ class Game < ActiveRecord::Base
 
   # Check if game is over
   def game_over
-    if winner_present || all_positions_taken
-      true
-    else
-      false
-    end
+    winner_present || all_positions_taken
   end
 
   # Check if winning row or column or diagonal present
   def winner_present
-    player1_id = Game.where(:game_id => 2).player1_id
-    player1_positions = []
-    Move.where(:game_id => 2, :user_id => player1_id).each do |move|
-      player1_positions << move.position.to_sym
-    end
-    player1_positions.to_set
+    player1_moves = player_moves(1).to_set
+    player2_moves = player_moves(2).to_set
 
-    player2_id = Game.where(:game_id => 2).player2_id
-    player2_positions = []
-    Move.where(:game_id => 2, :user_id => player2_id).each do |move|
-      player2_positions << move.position.to_sym
-    end
-    player2_positions.to_set
-  # NEED TO FIGURE OUT HOW TO DO A DYNAMIC GAME ID && USER ID
+   Game::WINNING_COMBOS.any? { |combo| player1_moves.superset?(combo.to_set) } || 
+   Game::WINNING_COMBOS.any? { |combo| player2_moves.superset?(combo.to_set) }
+  end
 
-    if Game::WINNING_COMBOS.any? { |combo| player1_positions.superset? combo } || Game::WINNING_COMBOS.any? { |combo| player2_positions.superset? combo }
-      true
-    else
-      false
-    end
+  def player1_winner
+  end
+
+  def player2_winner
   end
 
   # Check if all positions have been taken on the board
   def all_positions_taken
-    positions_played = []
-    Move.where(:game_id => 2).each do |move|
-      positions_played << move.position.to_sym
-    end
-  # NEED TO FIGURE OUT HOW TO DO A DYNAMIC GAME ID
-    if (Game::BOARD - positions_played).count == 0
-      true
-    else 
-      false
-    end
+    (Game::BOARD - current_board).count == 0
   end
 
-  # Define current board
-  def current_board
-    @board = []
-    Move.where(:game_id => 2).each do |move|
-      @board << move.position.to_sym
-    end
+  # Randomized computer move
+  def computer_move
+    (Game::BOARD - current_board).sample
   end
 
+
+  def player_moves player_number
+
+    user_id = send "player#{player_number}_id"
+    moves.where(user_id: user_id).pluck(:position).map(&:to_sym)
+  end
+
+  def current_board 
+    player_moves(1) + player_moves(2)
+  end
 end

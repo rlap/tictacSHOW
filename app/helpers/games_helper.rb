@@ -6,7 +6,7 @@ module GamesHelper
     elsif @player2_moves.include? position
       return 'o'
     else 
-      return "#{position}"
+      return link_to(position, new_move_path(@move, position: position, :game_id => @game.id))
     end
   end
 

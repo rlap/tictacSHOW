@@ -1,7 +1,7 @@
 Tictactoe::Application.routes.draw do
   root :to => 'users#new'
 
-  resources :boards
+  resources :moves
   resources :games
   resources :users
   resources :sessions, only: [:new, :create, :destroy]

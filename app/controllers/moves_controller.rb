@@ -1,83 +1,87 @@
 class MovesController < ApplicationController
 
-  # GET /boards
-  # GET /boards.json
+#Create new move from click on links on the board
+  def new
+    @move = Move.create(
+      :position => params[:position],
+      :user_id => current_user.id,
+      :game_id => params[:game_id]
+      )
+    redirect_to game_path(params[:game_id])
+  end
+
+
+# link_to(position, new_move_path(@move, :position => position, :user_id => current_user, :game_id => @game.id))
+
+  # GET /moves
+  # GET /moves.json
   def index
-    @boards = Board.all
+    @moves = Move.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @boards }
+      format.json { render json: @moves }
     end
   end
 
-  # GET /boards/1
-  # GET /boards/1.json
+  # GET /moves/1
+  # GET /moves/1.json
   def show
-    @board = Board.find(params[:id])
+    @move = Move.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @board }
+      format.json { render json: @move }
     end
   end
 
-  # GET /boards/new
-  # GET /boards/new.json
-  def new
-    @board = Board.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @board }
-    end
-  end
 
-  # GET /boards/1/edit
+  # GET /moves/1/edit
   def edit
-    @board = Board.find(params[:id])
+    @move = Move.find(params[:id])
   end
 
-  # POST /boards
-  # POST /boards.json
+  # POST /moves
+  # POST /moves.json
   def create
-    @board = Board.new(params[:board])
+    @move = Move.new(params[:move])
 
     respond_to do |format|
-      if @board.save
-        format.html { redirect_to @board, notice: 'Board was successfully created.' }
-        format.json { render json: @board, status: :created, location: @board }
+      if @move.save
+        format.html { redirect_to @move, notice: 'move was successfully created.' }
+        format.json { render json: @move, status: :created, location: @move }
       else
         format.html { render action: "new" }
-        format.json { render json: @board.errors, status: :unprocessable_entity }
+        format.json { render json: @move.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PUT /boards/1
-  # PUT /boards/1.json
+  # PUT /moves/1
+  # PUT /moves/1.json
   def update
-    @board = Board.find(params[:id])
+    @move = Move.find(params[:id])
 
     respond_to do |format|
-      if @board.update_attributes(params[:board])
-        format.html { redirect_to @board, notice: 'Board was successfully updated.' }
+      if @move.update_attributes(params[:move])
+        format.html { redirect_to @move, notice: 'move was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @board.errors, status: :unprocessable_entity }
+        format.json { render json: @move.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /boards/1
-  # DELETE /boards/1.json
+  # DELETE /moves/1
+  # DELETE /moves/1.json
   def destroy
-    @board = Board.find(params[:id])
-    @board.destroy
+    @move = Move.find(params[:id])
+    @move.destroy
 
     respond_to do |format|
-      format.html { redirect_to boards_url }
+      format.html { redirect_to moves_url }
       format.json { head :no_content }
     end
   end
