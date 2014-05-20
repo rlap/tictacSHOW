@@ -33,7 +33,7 @@ class GamesController < ApplicationController
     @current_board = @player1_moves + @player2_moves
 
     if @game.game_over
-      render action: "game_finished"
+      game_finished
     else
 
       if @game.moves.length != 0 && @game.moves.last.user_id == current_user.id
@@ -55,6 +55,48 @@ class GamesController < ApplicationController
 
   # Game over 
   def game_finished
+  binding.pry
+    @game = Game.find(params[:id])
+    @player1 = User.find(@game.player1_id)
+    @player2 = User.find(@game.player2_id)
+
+    @player1.games_played += 1
+    @player2.games_played += 1
+
+    if @game.player1_winner
+      @game.winning_user_id = @game.player1_id
+      @game.losing_user_id = @game.player2_id
+
+      @player1.games_won += 1
+      @player2.games_lost += 1
+
+      @player1.score += 100
+      @player2.score -= 50
+
+    elsif @game.player2_winner
+      @game.winning_user_id = @game.player2_id
+      @game.losing_user_id = @game.player1_id
+
+      @player2.games_won += 1
+      @player1.games_lost += 1
+
+      @player2.score += 100
+      @player1.score -= 50
+
+    else
+      @game.draw = true
+
+      @player1.games_drawn += 1
+      @player2.games_drawn += 1
+
+      @player1.score += 10
+      @player2.score += 10
+
+    end
+
+    @player1.save
+    @player2.save
+
     render "game_finished"
   end
 

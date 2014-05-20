@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140519143958) do
+ActiveRecord::Schema.define(:version => 20140520154708) do
 
   create_table "games", :force => true do |t|
     t.integer  "winning_user_id"
@@ -41,13 +41,13 @@ ActiveRecord::Schema.define(:version => 20140519143958) do
   create_table "users", :force => true do |t|
     t.string   "email"
     t.string   "password_digest"
-    t.integer  "score"
-    t.integer  "games_played"
-    t.integer  "games_won"
-    t.integer  "games_lost"
-    t.integer  "games_drawn"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.integer  "score",           :default => 0
+    t.integer  "games_played",    :default => 0
+    t.integer  "games_won",       :default => 0
+    t.integer  "games_lost",      :default => 0
+    t.integer  "games_drawn",     :default => 0
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
 end

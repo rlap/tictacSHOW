@@ -22,17 +22,17 @@ class Game < ActiveRecord::Base
 
   # Check if winning row or column or diagonal present
   def winner_present
-    player1_moves = player_moves(1).to_set
-    player2_moves = player_moves(2).to_set
-
-   Game::WINNING_COMBOS.any? { |combo| player1_moves.superset?(combo.to_set) } || 
-   Game::WINNING_COMBOS.any? { |combo| player2_moves.superset?(combo.to_set) }
+    player1_winner || player2_winner
   end
 
   def player1_winner
+    player1_moves = player_moves(1).to_set
+    Game::WINNING_COMBOS.any? { |combo| player1_moves.superset?(combo.to_set) }
   end
 
   def player2_winner
+    player2_moves = player_moves(2).to_set
+    Game::WINNING_COMBOS.any? { |combo| player2_moves.superset?(combo.to_set) }
   end
 
   # Check if all positions have been taken on the board
