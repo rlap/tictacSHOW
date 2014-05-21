@@ -36,12 +36,11 @@ class GamesController < ApplicationController
       game_finished
     else
 
-      if @game.moves.length != 0 && @game.moves.last.user_id == current_user.id
+      if @game.moves.length != 0 && @game.moves.first.user_id == current_user.id
         position = (Game::BOARD - @current_board).sample
         @game.moves.create(
           :position => position,
-  # Computer assumed to be user '1'
-          :user_id => 1,
+          :user_id => 1, # Computer assumed to be user '1'
           :game_id => @game.id
           )
       end
@@ -55,7 +54,6 @@ class GamesController < ApplicationController
 
   # Game over 
   def game_finished
-  binding.pry
     @game = Game.find(params[:id])
     @player1 = User.find(@game.player1_id)
     @player2 = User.find(@game.player2_id)
