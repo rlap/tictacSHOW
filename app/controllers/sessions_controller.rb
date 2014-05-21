@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       #user is authenticated
       session[:user_id] = user.id
-      redirect_to games_path, notice: "you successfully signed in"
+      redirect_to root_path, notice: "you successfully signed in"
     else
       # wrong credentials
       flash.now[:alert] = "Invalid Login Credentials"

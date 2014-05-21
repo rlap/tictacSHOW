@@ -1,1 +1,25 @@
-This is going to be a list of the games played 
+
+<h1> Games history </h1>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Opponent</th>
+        <th>Winner</th>
+        <th>Points earned</th>
+        <th>Finished at</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+      <% @games.each do |game| %>
+      <tr>
+        <td><%= User.find(game_opponent(game)).screen_name %></td>
+        <td><%= winner(game) %></td>
+        <td><%= points_earned(game)%></td>
+        <td><%= game_finish_time(game)%></td>
+      </tr>
+      <% end %>
+  </table>
+</div>

@@ -1,1 +1,22 @@
-This is going to be a list of the top users
+<h1>Top users</h1>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Screen name</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    <tr>
+      <% @users.each do |user| %>
+      <tr>
+        <td><%= user.screen_name %></td>
+        <td><%= user.score %></td>
+      </tr>
+      <% end %>
+    </tr>
+  </table>
+</div>

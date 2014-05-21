@@ -1,5 +1,8 @@
-New game
-Current game
-Active games
-Game history 
-Leaderboard
+<h1>What next?</h1>
+
+<%= button_to "New game", current_game_path, class:"btn btn-primary btn-lg btn-block", method: :get %>
+<%= button_to "Current game", new_game_path, class:"btn btn-success btn-lg btn-block", method: :get %>
+<%= button_to "Active games", active_games_path, class:"btn btn-info btn-lg btn-block", method: :get %>
+<%= button_to "Game history", games_history_path, class:"btn btn-warning btn-lg btn-block", method: :get %>
+<%= button_to "Leaderboard", new_session_path, class:"btn btn-danger btn-lg btn-block", method: :get %>
+

@@ -23,7 +23,7 @@ class UsersController < ApplicationController
 
 # Show leaderboard
 def leaderboard
-  @users = User.all
+  @users = User.order("score DESC")
   render "leaderboard"
 end
 
@@ -44,7 +44,7 @@ end
     respond_to do |format|
       if @user.save
         session[:user_id] = @user.id
-        format.html { redirect_to new_session_path, notice: 'User was successfully created and logged in' }
+        format.html { redirect_to root_path, notice: 'User was successfully created and logged in' }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "new" }

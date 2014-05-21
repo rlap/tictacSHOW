@@ -14,23 +14,34 @@
 <body>
 
 <!-- Nav bar -->
-  <%= nav_bar :fixed => :top, :brand => "Tic Tac Toe", :responsive => true do %>
-      <%= menu_group do %>
-          <%= menu_item "Current game", current_game_path %>
-          <%= menu_item "New game", new_game_path %>
-          <%= menu_item "Active games", active_games_path %>
-          <%= menu_item "Game history", games_history_path %>
-          <%= menu_item "Leaderboard", leaderboard_path %>
+  <div class="navbar navbar-default">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">Tic Tac SHOW</a>
+  </div>
+  <div class="navbar-collapse collapse navbar-responsive-collapse">
+    <ul class="nav navbar-nav">
+      <li><%= link_to "Current game", current_game_path %></li>
+      <li><%= link_to "New game", new_game_path %></li>
+      <li><%= link_to "Active games", active_games_path %></li>
+      <li><%= link_to "Game history", games_history_path %></li>
+      <li><%= link_to "Leaderboard", leaderboard_path %></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <% if current_user %>
+        <li><%= link_to "Log Out", session_path(session), method: :delete, confirm: "Are you sure?" %></li>
+      <% else %>
+        <li><%= link_to "Login", new_session_path %></li>
       <% end %>
-      <%= menu_group :pull => :right do %>
-          <% if current_user %>
-            <%= menu_item "Log Out", session_path(session), method: :delete, confirm: "Are you sure?" %>
-          <% else %>
-            <%= menu_item "Login", new_session_path %>
-          <% end %>
-      <% end %>
-  <% end %>
-<!-- End of Nav Bar -->
+    </ul>
+  </div>
+</div>
+<!-- End of nav bar -->
+
 
     <% flash.each do |name, msg| -%>
       <%= content_tag :div, msg, class: name %>

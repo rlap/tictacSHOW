@@ -26,7 +26,7 @@ end
 # Show active games
 def active_games
   if !current_user.nil? && current_user.moves.length != 0
-    @games = current_user.games.where(:finished => false)
+    @games = current_user.games.where(:finished => false).order("updated_at DESC")
     render "active_games"
   else
     redirect_to new_session_path
@@ -36,7 +36,7 @@ end
 # Show games history
 def games_history
   if !current_user.nil? && current_user.moves.length != 0
-    @games = current_user.games.where(:finished => true)
+    @games = current_user.games.where(:finished => true).order("updated_at DESC")
     render "games_history"
   else
     redirect_to new_session_path

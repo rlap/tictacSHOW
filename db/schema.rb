@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140521135956) do
+ActiveRecord::Schema.define(:version => 20140521220126) do
 
   create_table "games", :force => true do |t|
     t.integer  "winning_user_id"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20140521135956) do
     t.integer  "games_drawn",     :default => 0
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
+    t.string   "screen_name"
   end
 
 end

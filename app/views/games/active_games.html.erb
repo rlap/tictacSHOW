@@ -1,1 +1,22 @@
-This is going to be a list of active games
+<h1> Active games </h1>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Opponent</th>
+        <th>Moves played</th>
+        <th>Last updated</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+      <% @games.each do |game| %>
+      <tr>
+        <td><%= link_to "#{User.find(game_opponent(game)).screen_name}", game_path(game) %></td>
+        <td><%= link_to "#{game.moves.length}", game_path(game) %></td>
+        <td><%= link_to "#{display_time(game)}", game_path(game) %></td>
+      </tr>
+      <% end %>
+  </table>
+</div>
