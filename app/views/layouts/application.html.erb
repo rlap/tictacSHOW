@@ -12,6 +12,19 @@
       <%= content_tag :div, msg, class: name %>
     <% end -%>
     
+    <% if current_user  %>
+      <li>
+        <%= link_to "logout(#{current_user.email}) ", session_path(session) , method: :delete, confirm: "Sure DUDE ?"%>
+      </li>
+    <% else %>
+      <li>
+      <%= link_to "Login", new_session_path %>
+      </li>
+      <li>
+      <%= link_to "Sign-up", new_user_path %>
+      </li>
+    <% end %>
+
 <%= yield %>
 
 </body>

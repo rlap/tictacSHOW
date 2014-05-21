@@ -2,11 +2,14 @@ class GamesController < ApplicationController
 
 # Show all games 
   def index
-    @games = Game.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @boards }
+    if current_user
+      @games = current_user.games
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @boards }
+      end
+    else
+      redirect_to new_session_path
     end
   end
 
@@ -36,13 +39,15 @@ class GamesController < ApplicationController
       game_finished
     else
 
-      if @game.moves.length != 0 && @game.moves.first.user_id == current_user.id
-        position = (Game::BOARD - @current_board).sample
-        @game.moves.create(
-          :position => position,
-          :user_id => 1, # Computer assumed to be user '1'
-          :game_id => @game.id
-          )
+      if @game.player1_id == 1 || @game.player2_id == 1
+        if @game.moves.length != 0 && @game.moves.first.user_id == current_user.id
+          position = (Game::BOARD - @current_board).sample
+          @game.moves.create(
+            :position => position,
+            :user_id => 1, # Computer assumed to be user '1'
+            :game_id => @game.id
+            )
+        end
       end
 
       respond_to do |format|
@@ -123,6 +128,8 @@ class GamesController < ApplicationController
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end
+    @game.users << current_user
+    @game.users << User.find(@game.player2_id)
   end
 
   # DELETE /games/1

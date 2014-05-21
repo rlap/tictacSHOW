@@ -2,11 +2,21 @@ class MovesController < ApplicationController
 
 #Create new move from click on links on the board
   def new
-    @move = Move.create(
-      :position => params[:position],
-      :user_id => current_user.id,
-      :game_id => params[:game_id]
-      )
+    @game = Game.find(params[:game_id])
+
+    if @game.moves.length == 0 || @game.moves.length.even?
+      current_player_id = @game.player1_id
+    else
+      current_player_id = @game.player2_id
+    end
+
+    if current_player_id == current_user.id
+      @move = Move.create(
+        :position => params[:position],
+        :user_id => current_user.id,
+        :game_id => params[:game_id]
+        )
+    end
     redirect_to game_path(params[:game_id])
   end
 
@@ -40,22 +50,6 @@ class MovesController < ApplicationController
   # GET /moves/1/edit
   def edit
     @move = Move.find(params[:id])
-  end
-
-  # POST /moves
-  # POST /moves.json
-  def create
-    @move = Move.new(params[:move])
-
-    respond_to do |format|
-      if @move.save
-        format.html { redirect_to @move, notice: 'move was successfully created.' }
-        format.json { render json: @move, status: :created, location: @move }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @move.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # PUT /moves/1
