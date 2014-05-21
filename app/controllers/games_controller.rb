@@ -13,6 +13,16 @@ class GamesController < ApplicationController
     end
   end
 
+# Show current game
+def current_game
+  if current_user.moves.length != 0
+    @game = Game.find(current_user.moves.last.game_id)
+    redirect_to game_path(@game)
+  else
+    redirect_to new_session_path
+  end
+end
+
 # Show game board
   def show
     @game = Game.find(params[:id])
