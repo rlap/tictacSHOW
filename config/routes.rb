@@ -1,5 +1,5 @@
 Tictactoe::Application.routes.draw do
-  root :to => 'users#new'
+  root :to => 'users#welcome'
 
   resources :moves
   resources :games
@@ -7,7 +7,9 @@ Tictactoe::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
 
   get "/current_game", to: "games#current_game"
-
+  get "/active_games", to: "games#active_games"
+  get "/games_history", to: "games#games_history"
+  get "/leaderboard", to: "users#leaderboard"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

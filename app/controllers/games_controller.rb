@@ -15,9 +15,29 @@ class GamesController < ApplicationController
 
 # Show current game
 def current_game
-  if current_user.moves.length != 0
+  if !current_user.nil? && current_user.moves.length != 0
     @game = Game.find(current_user.moves.last.game_id)
     redirect_to game_path(@game)
+  else
+    redirect_to new_session_path
+  end
+end
+
+# Show active games
+def active_games
+  if !current_user.nil? && current_user.moves.length != 0
+    @games = current_user.games.where(:finished => false)
+    render "active_games"
+  else
+    redirect_to new_session_path
+  end
+end
+
+# Show games history
+def games_history
+  if !current_user.nil? && current_user.moves.length != 0
+    @games = current_user.games.where(:finished => true)
+    render "games_history"
   else
     redirect_to new_session_path
   end
@@ -50,7 +70,7 @@ end
     else
 
       if @game.player1_id == 1 || @game.player2_id == 1
-        if @game.moves.length != 0 && @game.moves.first.user_id == current_user.id
+        if @game.moves.length != 0 && @game.moves.last.user_id == current_user.id
           position = (Game::BOARD - @current_board).sample
           @game.moves.create(
             :position => position,
@@ -69,12 +89,14 @@ end
 
   # Game over 
   def game_finished
+
     @game = Game.find(params[:id])
     @player1 = User.find(@game.player1_id)
     @player2 = User.find(@game.player2_id)
 
     @player1.games_played += 1
     @player2.games_played += 1
+    @game.finished = true
 
     if @game.player1_winner
       @game.winning_user_id = @game.player1_id
@@ -109,6 +131,7 @@ end
 
     @player1.save
     @player2.save
+    @game.save
 
     render "game_finished"
   end

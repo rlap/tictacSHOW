@@ -1,4 +1,15 @@
 class UsersController < ApplicationController
+  # Welcome page
+  def welcome
+    if !current_user 
+      render "welcome"
+    elsif current_user.games.length > 0 
+      redirect_to game_path(current_user.games.last)
+    else
+      render "starting_menu"
+    end
+  end
+
   # GET /users
   # GET /users.json
   def index
@@ -9,6 +20,12 @@ class UsersController < ApplicationController
       format.json { render json: @users }
     end
   end
+
+# Show leaderboard
+def leaderboard
+  @users = User.all
+  render "leaderboard"
+end
 
 # Sign up page
   def new
