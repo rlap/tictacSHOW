@@ -10,3 +10,22 @@
   .form-horizontal .control-label {
     text-align: left;
   }
+
+table.game_board {
+  background-color: white;
+  color: black;
+  width: 400px;
+  height: 400px;
+}
+
+table.game_board td {
+  color: black;
+  font-size: 10em;
+  border: 1px dotted black;
+  text-align: center;
+}
+
+table.game_board td a {
+  color: black;
+  text-decoration: none;
+}

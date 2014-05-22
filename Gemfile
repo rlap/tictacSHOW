@@ -1,3 +1,5 @@
+ruby "2.1.1"
+
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.17'
@@ -28,6 +30,10 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'meta_request'
   gem 'hirb'
+end
+
+group :production do
+  gem 'rails_12factor'
 end
 
 gem 'jquery-rails'

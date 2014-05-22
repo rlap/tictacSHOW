@@ -1,27 +1,33 @@
-<p id="notice"><%= notice %></p>
+<!-- <p id="notice"><%= notice %></p>
 
 <%= @player1_moves.inspect %>
 <%= @player2_moves.inspect %>
 ----
 <%= @game.moves.inspect %>
+ -->
 
-<table style="border: 1px solid black;">
-  <tr>
-    <td><%= x_or_o(:a1) %></td>
-    <td><%= x_or_o(:a2) %></td>
-    <td><%= x_or_o(:a3) %></td>
-  </tr>
-  <tr>
-    <td><%= x_or_o(:b1) %></td>
-    <td><%= x_or_o(:b2) %></td>
-    <td><%= x_or_o(:b3) %></td>
-  </tr>
-  <tr>
-    <td><%= x_or_o(:c1) %></td>
-    <td><%= x_or_o(:c2) %></td>
-    <td><%= x_or_o(:c3) %></td>
-  </tr>
-</table>
+<h1>Current game</h1>
+<h2><%= turn(@game) %></h2>
 
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+<div class="well">
+  <div class="table-responsive">
+    <table class="game_board">
+      <tr>
+        <td><%= x_or_o(:a1) %></td>
+        <td><%= x_or_o(:a2) %></td>
+        <td><%= x_or_o(:a3) %></td>
+      </tr>
+      <tr>
+        <td><%= x_or_o(:b1) %></td>
+        <td><%= x_or_o(:b2) %></td>
+        <td><%= x_or_o(:b3) %></td>
+      </tr>
+      <tr>
+        <td><%= x_or_o(:c1) %></td>
+        <td><%= x_or_o(:c2) %></td>
+        <td><%= x_or_o(:c3) %></td>
+      </tr>
+    </table>
+  </div>
+</div>
+

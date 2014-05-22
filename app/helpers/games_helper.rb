@@ -6,7 +6,23 @@ module GamesHelper
     elsif @player2_moves.include? position
       return 'o'
     else 
-      return link_to(position, new_move_path(@move, position: position, :game_id => @game.id))
+      return link_to("?", new_move_path(@move, position: position, :game_id => @game.id))
+    end
+  end
+
+  def turn(game)
+    if game.moves.length == 0 || game.moves.length.even?
+      current_player_id = game.player1_id
+      other_player_id = game.player2_id
+    else
+      current_player_id = game.player2_id
+      other_player_id = game.player1_id
+    end
+
+    if current_player_id == current_user.id
+      "Your turn!"
+    else
+      "Waiting for #{User.find(other_player_id).screen_name} - hit refresh to peek and see if they've gone"
     end
   end
 
