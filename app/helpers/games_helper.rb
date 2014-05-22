@@ -14,6 +14,62 @@ module GamesHelper
     end
   end
 
+  def game_over_title(game)
+    if game.draw == true
+      "Loser"
+    else
+      "Winner"
+    end
+  end
+
+  def left_user(game)
+    if game.winning_user_id == game.player2_id
+      game.users.find(game.player2_id).screen_name
+    else
+      game.users.find(game.player1_id).screen_name
+    end
+  end
+
+  def right_user(game)
+    if game.winning_user_id == game.player2_id
+      game.users.find(game.player1_id).screen_name
+    else
+      game.users.find(game.player2_id).screen_name
+    end
+  end
+
+  def game_over_photos_1(game)
+    if game.winning_user_id == game.player1_id
+      image_tag(game.player1_img_good.thumb.url)
+    elsif game.winning_user_id == game.player2_id
+      if game.player2_id == 1 #computer
+        image_tag("/assets/thumb_computer_good.png")
+      else
+        image_tag(game.player2_img_good.thumb.url)
+      end
+    else
+      image_tag(game.player1_img_bad.thumb.url)
+    end
+  end
+
+  def game_over_photos_2(game)
+    if game.winning_user_id == game.player1_id
+      if game.player2_id == 1 #computer
+        image_tag("/assets/thumb_computer_bad.png")
+      else
+        image_tag(game.player2_img_bad.thumb.url)
+      end
+    elsif game.winning_user_id == game.player2_id
+      image_tag(game.player1_img_bad.thumb.url)
+    else
+      if game.player2_id == 1 #computer
+        image_tag("/assets/thumb_computer_bad.png")
+      else
+        image_tag(game.player2_img_bad.thumb.url)
+      end
+    end
+  end
+
   def turn(game)
     if game.moves.length == 0 || game.moves.length.even?
       current_player_id = game.player1_id
@@ -70,7 +126,7 @@ module GamesHelper
     elsif game.losing_user_id == current_user.id
       "Game over - you got schooled"
     else
-      "Game over - draw"
+      "Draw - everyone loses"
     end
   end
 

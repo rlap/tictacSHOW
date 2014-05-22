@@ -6,6 +6,10 @@ class User < ActiveRecord::Base
   has_secure_password
 
   def self.all_except_current_user(user)
-    where("id != ?", user.id)
+    where("id != ? AND screen_name NOTNULL", user.id)
+  end
+
+  def self.all_except_preusers
+    where("screen_name NOTNULL")
   end
 end

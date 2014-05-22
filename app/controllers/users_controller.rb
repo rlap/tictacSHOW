@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+
   # Welcome page
   def welcome
     if !current_user 
@@ -23,7 +24,7 @@ class UsersController < ApplicationController
 
 # Show leaderboard
 def leaderboard
-  @users = User.order("score DESC")
+  @users = User.all_except_preusers.order("score DESC")
   render "leaderboard"
 end
 

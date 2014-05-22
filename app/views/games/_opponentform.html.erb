@@ -1,0 +1,12 @@
+    <div class="form-group">
+      <%= f.label :player2_id, "Play against:", class: "col-lg-2 control-label" %><br />
+      <div class="col-lg-10">
+        <%= f.select :player2_id , options_from_collection_for_select(User.all_except_current_user(current_user), :id, :screen_name,nil),include_blank: true, class: "col-lg-2 control-label"%>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= label_tag :new_player_email, "Or Enter an Email:", class: "col-lg-2 control-label" %><br />
+      <div class="col-lg-10">
+        <%= email_field_tag :new_player_email, nil, class: "form-control"%>
+      </div>
+    </div>

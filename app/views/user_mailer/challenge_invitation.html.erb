@@ -1,0 +1,10 @@
+<h1>Tic tac SHOW - You've been challenged</h1>
+
+<p> Your friend, <%= @user.screen_name %>, has challenged you to a game of tic tac SHOW.</p><br> 
+<p>Are you going to leave them hanging?</p><br>
+<p>Of course not! </p>
+
+<p>ROSE ADD DETAILS</p>
+
+<br>
+<%= link_to "Accept challenge here", new_session_path(game_id: @game.id) %>

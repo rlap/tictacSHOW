@@ -1,6 +1,31 @@
-<h1>Editing game</h1>
+<h1>Accept challenge</h1>
 
-<%= render 'form' %>
+<div class="well">
+  <%= form_for(@game, html: {class: "form-horizontal"}) do |f| %>
+    <% if @game.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@game.errors.count, "error") %> prohibited this game from being saved:</h2>
 
-<%= link_to 'Show', @game %> |
-<%= link_to 'Back', games_path %>
+        <ul>
+        <% @game.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :player2_img_good, 'Flattering photo', class: "col-lg-2 control-label" %><br />
+    </div>
+        <%= f.file_field :player2_img_good %>
+ 
+    <div class="form-group">
+      <%= f.label :player2_img_bad, 'Embarassing photo', class: "col-lg-2 control-label" %><br />
+    </div>
+        <%= f.file_field :player2_img_bad %>
+
+    <div class="btn btn-primary">
+      <%= f.submit %>
+    </div>
+  <% end %>
+</div>

@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   def new
+    session[:game_id] = params[:game_id] if params[:game_id]
   end
 
   # Signin
@@ -8,6 +9,9 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       #user is authenticated
       session[:user_id] = user.id
+      if session[:game_id]
+        redirect_to edit_game_path(session[:game_id]) and return
+      end
       redirect_to root_path, notice: "you successfully signed in"
     else
       # wrong credentials

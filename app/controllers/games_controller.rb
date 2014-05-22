@@ -150,19 +150,28 @@ end
   # POST /games
   # POST /games.json
   def create
-    
+    @game = Game.create(params[:game])
+
     if params[:new_player_email].present?
-      new_user = User.create({
+      @new_user = User.create({
         email: params[:new_player_email],
         password: "tictacshow",
         password_confirmation: "tictacshow",
       })
-      params[:game][:player2_id] = new_user.id
+      @game.player2_id = @new_user.id
+      
+      UserMailer.challenge_invitation(current_user, @new_user, @game).deliver
     end
-    @game = Game.new(params[:game])
+
     @game.player1_id = current_user.id
+
+    if @game.player2_id == 1
+      @game.challenge_accepted = true
+    end
+
     @game.users << current_user
     @game.users << User.find(@game.player2_id)
+
     respond_to do |format|
       if @game.save
         format.html { redirect_to @game, notice: 'Game was successfully created.' }
@@ -172,7 +181,25 @@ end
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end
-    
+  end
+
+  def edit
+    @game = Game.find(session[:game_id])
+  end
+
+  def update
+    @game = Game.find(session[:game_id])
+    @game.challenge_accepted = true
+
+    respond_to do |format|
+      if @game.update_attributes(params[:game])
+        format.html { redirect_to @game, notice: 'Person was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @game.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # DELETE /games/1

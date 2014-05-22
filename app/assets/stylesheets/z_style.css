@@ -50,6 +50,26 @@ a:link, a:hover, a:focus, a:visited {
   font-size: 9em;
 }
 
+.end_photos {
+  width: 400px;
+  height: 200px;
+}
+
+.end_row {
+  width: 100%;
+}
+
+.end_box {
+  float: left;
+  width: 49 %;
+  height: 100%;
+  width: 50%;
+}
+
+.end_box img {
+  width: 100%;
+}
+
 
 @media screen and (max-width: 480px){
   .board {

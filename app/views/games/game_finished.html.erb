@@ -1,5 +1,24 @@
 <h1><%= game_finish_message(@game) %></h1>
 
+<div class="end_photos">
+  <div class="end_row">
+    <div class="end_box">
+      <%= game_over_title(@game) %> - <%=left_user(@game) %>
+    </div>
+    <div class="end_box">
+      Loser - <%=right_user(@game) %>
+    </div>
+  </div>
+  <div class="end_row">
+    <div class="end_box">
+      <%= game_over_photos_1(@game) %>
+    </div>
+    <div class="end_box">
+      <%= game_over_photos_2(@game) %>
+    </div>
+  </div>
+</div>
+
 <%= button_to "Play again", new_game_path, class:"btn btn-info btn-lg btn-block", method: :get %>
 
 <%= button_to "View leaderboard", leaderboard_path, class:"btn btn-info btn-lg btn-block", method: :get %>
