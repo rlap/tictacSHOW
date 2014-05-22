@@ -9,25 +9,22 @@
 <h1>Current game</h1>
 <h2><%= turn(@game) %></h2>
 
-<div class="well">
-  <div class="table-responsive">
-    <table class="game_board">
-      <tr>
-        <td><%= x_or_o(:a1) %></td>
-        <td><%= x_or_o(:a2) %></td>
-        <td><%= x_or_o(:a3) %></td>
-      </tr>
-      <tr>
-        <td><%= x_or_o(:b1) %></td>
-        <td><%= x_or_o(:b2) %></td>
-        <td><%= x_or_o(:b3) %></td>
-      </tr>
-      <tr>
-        <td><%= x_or_o(:c1) %></td>
-        <td><%= x_or_o(:c2) %></td>
-        <td><%= x_or_o(:c3) %></td>
-      </tr>
-    </table>
+<div class="board">
+  <div class="board_row">
+    <div class="board_box"><%= x_or_o(:a1) %></div>
+    <div class="board_box"><%= x_or_o(:a2) %></div>
+    <div class="board_box"><%= x_or_o(:a3) %></div>
+  </div>
+  <div class="board_row">
+    <div class="board_box"><%= x_or_o(:b1) %></div>
+    <div class="board_box"><%= x_or_o(:b2) %></div>
+    <div class="board_box"><%= x_or_o(:b3) %></div>
+  </div>
+  <div class="board_row">
+    <div class="board_box"><%= x_or_o(:c1) %></div>
+    <div class="board_box"><%= x_or_o(:c2) %></div>
+    <div class="board_box"><%= x_or_o(:c3) %></div>
   </div>
 </div>
+
 

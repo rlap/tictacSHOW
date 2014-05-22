@@ -2,9 +2,13 @@ module GamesHelper
 
   def x_or_o(position)
     if @player1_moves.include? position
-      return 'x'
+      image_tag(@game.player1_img_good.player1_board.url)
     elsif @player2_moves.include? position
-      return 'o'
+      if @game.player2_id == 1 #computer
+        image_tag("assets/images/computer_images/player2_board_computer_good.png")
+      else
+        image_tag(@game.player2_img_good.player2_board.url)
+      end
     else 
       return link_to("?", new_move_path(@move, position: position, :game_id => @game.id))
     end

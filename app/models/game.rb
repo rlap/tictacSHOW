@@ -1,7 +1,12 @@
 class Game < ActiveRecord::Base
-  attr_accessible :draw, :losing_user_id, :winning_user_id, :player1_id, :player2_id
+  attr_accessible :draw, :losing_user_id, :winning_user_id, :player1_id, :player2_id, :player1_img_good, :player2_img_good, :player1_img_bad, :player2_img_bad
   has_and_belongs_to_many :users
   has_many :moves
+
+  mount_uploader :player1_img_bad, ImageUploader
+  mount_uploader :player2_img_bad, ImageUploader
+  mount_uploader :player1_img_good, ImageUploader
+  mount_uploader :player2_img_good, ImageUploader
 
   BOARD = [:a1, :a2, :a3, :b1, :b2, :b3, :c1, :c2, :c3]
   WINNING_COMBOS = [

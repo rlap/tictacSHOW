@@ -11,17 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140521220126) do
+ActiveRecord::Schema.define(:version => 20140522085601) do
 
   create_table "games", :force => true do |t|
     t.integer  "winning_user_id"
     t.integer  "losing_user_id"
     t.boolean  "draw"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.integer  "player1_id"
     t.integer  "player2_id"
-    t.boolean  "finished",        :default => false
+    t.boolean  "finished",         :default => false
+    t.text     "player1_img_good"
+    t.text     "player2_img_good"
+    t.text     "player1_img_bad"
+    t.text     "player2_img_bad"
   end
 
   create_table "games_users", :id => false, :force => true do |t|
