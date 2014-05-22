@@ -5,7 +5,7 @@ module GamesHelper
       image_tag(@game.player1_img_good.player1_board.url)
     elsif @player2_moves.include? position
       if @game.player2_id == 1 #computer
-        image_tag("assets/images/computer_images/player2_board_computer_good.png")
+        image_tag("/assets/player2_board_computer_good.png")
       else
         image_tag(@game.player2_img_good.player2_board.url)
       end

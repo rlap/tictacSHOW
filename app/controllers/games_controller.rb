@@ -150,8 +150,19 @@ end
   # POST /games
   # POST /games.json
   def create
+    
+    if params[:new_player_email].present?
+      new_user = User.create({
+        email: params[:new_player_email],
+        password: "tictacshow",
+        password_confirmation: "tictacshow",
+      })
+      params[:game][:player2_id] = new_user.id
+    end
     @game = Game.new(params[:game])
     @game.player1_id = current_user.id
+    @game.users << current_user
+    @game.users << User.find(@game.player2_id)
     respond_to do |format|
       if @game.save
         format.html { redirect_to @game, notice: 'Game was successfully created.' }
@@ -161,8 +172,7 @@ end
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end
-    @game.users << current_user
-    @game.users << User.find(@game.player2_id)
+    
   end
 
   # DELETE /games/1

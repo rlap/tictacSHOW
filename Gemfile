@@ -33,6 +33,7 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'meta_request'
   gem 'hirb'
+  gem "letter_opener"
 end
 
 group :production do

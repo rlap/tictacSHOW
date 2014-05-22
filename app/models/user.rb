@@ -4,4 +4,8 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :games
   has_many :moves
   has_secure_password
+
+  def self.all_except_current_user(user)
+    where("id != ?", user.id)
+  end
 end
