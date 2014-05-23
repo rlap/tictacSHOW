@@ -1,9 +1,9 @@
 module GamesHelper
 
   def x_or_o(position)
-    if @player1_moves.include? position
+    if @game.player1_moves.include? position
       image_tag(@game.player1_img_good.player1_board.url)
-    elsif @player2_moves.include? position
+    elsif @game.player2_moves.include? position
       if @game.player2_id == 1 #computer
         image_tag("/assets/player2_board_computer_good.png")
       else

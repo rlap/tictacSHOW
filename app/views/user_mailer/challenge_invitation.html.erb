@@ -4,7 +4,12 @@
 <p>Are you going to leave them hanging?</p><br>
 <p>Of course not! </p>
 
-<p>ROSE ADD DETAILS</p>
+<p>Login to your account with the following details
+  <ul>
+    <li>email: <%= @invitee.email %></li>
+    <li>password: tictacshow</li>
+  </ul>
+</p>
 
 <br>
 <%= link_to "Accept challenge here", new_session_path(game_id: @game.id) %>

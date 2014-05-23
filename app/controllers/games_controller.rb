@@ -47,93 +47,11 @@ end
   def show
     @game = Game.find(params[:id])
 
-    if @game.moves.where(:user_id => @game.player1_id)
-      @player1_moves = @game.moves.where(:user_id => @game.player1_id).map do |move|
-        move.position.to_sym
-      end
-    else
-      @player1_moves = []
-    end
-
-    if @game.moves.where(:user_id => @game.player2_id)
-      @player2_moves = @game.moves.where(:user_id => @game.player2_id).map do |move|
-        move.position.to_sym
-      end
-    else
-      @player2_moves = []
-    end
-
-    @current_board = @player1_moves + @player2_moves
-
     if @game.game_over
-      game_finished
+      render :game_finished
     else
-
-      if @game.player1_id == 1 || @game.player2_id == 1
-        if @game.moves.length != 0 && @game.moves.last.user_id == current_user.id
-          position = (Game::BOARD - @current_board).sample
-          @game.moves.create(
-            :position => position,
-            :user_id => 1, # Computer assumed to be user '1'
-            :game_id => @game.id
-            )
-        end
-      end
-
-      respond_to do |format|
-        format.html # show.html.erb
-        format.json { render json: @game }
-      end
+      render :show
     end
-  end
-
-  # Game over 
-  def game_finished
-
-    @game = Game.find(params[:id])
-    @player1 = User.find(@game.player1_id)
-    @player2 = User.find(@game.player2_id)
-
-    @player1.games_played += 1
-    @player2.games_played += 1
-    @game.finished = true
-
-    if @game.player1_winner
-      @game.winning_user_id = @game.player1_id
-      @game.losing_user_id = @game.player2_id
-
-      @player1.games_won += 1
-      @player2.games_lost += 1
-
-      @player1.score += 100
-      @player2.score -= 50
-
-    elsif @game.player2_winner
-      @game.winning_user_id = @game.player2_id
-      @game.losing_user_id = @game.player1_id
-
-      @player2.games_won += 1
-      @player1.games_lost += 1
-
-      @player2.score += 100
-      @player1.score -= 50
-
-    else
-      @game.draw = true
-
-      @player1.games_drawn += 1
-      @player2.games_drawn += 1
-
-      @player1.score += 10
-      @player2.score += 10
-
-    end
-
-    @player1.save
-    @player2.save
-    @game.save
-
-    render "game_finished"
   end
 
   # GET /games/new
@@ -153,14 +71,19 @@ end
     @game = Game.create(params[:game])
 
     if params[:new_player_email].present?
-      @new_user = User.create({
-        email: params[:new_player_email],
-        password: "tictacshow",
-        password_confirmation: "tictacshow",
-      })
-      @game.player2_id = @new_user.id
-      
-      UserMailer.challenge_invitation(current_user, @new_user, @game).deliver
+      if User.find_by_email(params[:new_player_email])
+        @user = User.find_by_email(params[:new_player_email])
+        UserMailer.challenge_invitation_already_user(current_user, @user, @game).deliver
+      else
+        @new_user = User.create({
+          email: params[:new_player_email],
+          password: "tictacshow",
+          password_confirmation: "tictacshow",
+        })
+        @game.player2_id = @new_user.id
+        
+        UserMailer.challenge_invitation(current_user, @new_user, @game).deliver
+      end
     end
 
     @game.player1_id = current_user.id
