@@ -8,6 +8,7 @@
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <meta name="viewport" content="width=device-width, user-scalable=no"> <!-- Helps with mobile -->
+    <meta http-equiv="refresh" content="10">
 
   <title>TictacSHOW</title>
   <link rel="shortcut icon" href="http://faviconist.com/icons/8f5ca88e531c3591b75b828a9208aeeb/favicon.ico" />
@@ -50,7 +51,12 @@
     <% end -%>
   
 <div class="rose_fix">
+  
   <%= yield %>
+</div>
+
+<div class="footer_by_rose">
+  <p>Created by Rose la Prairie, May 2014</p>
 </div>
 
 </body>

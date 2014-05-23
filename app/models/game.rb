@@ -19,6 +19,8 @@ class Game < ActiveRecord::Base
     [:a1, :b2, :c3],
     [:a3, :b2, :c1]
   ].to_set
+  CORNERS = [:a1, :a3, :c1, :c3]
+  CENTRE = [:b2]
 
   # Check if game is over
   def game_over
