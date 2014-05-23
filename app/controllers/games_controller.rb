@@ -73,6 +73,7 @@ end
     if params[:new_player_email].present?
       if User.find_by_email(params[:new_player_email])
         @user = User.find_by_email(params[:new_player_email])
+        @game.player2_id = @user.id
         UserMailer.challenge_invitation_already_user(current_user, @user, @game).deliver
       else
         @new_user = User.create({
@@ -81,7 +82,6 @@ end
           password_confirmation: "tictacshow",
         })
         @game.player2_id = @new_user.id
-        
         UserMailer.challenge_invitation(current_user, @new_user, @game).deliver
       end
     end
