@@ -2,6 +2,8 @@ ruby "2.1.1"
 
 source 'https://rubygems.org'
 
+gem "fog", "~> 1.3.1"
+
 gem 'rails', '3.2.17'
 gem "bcrypt-ruby", "~> 3.0.0"
 
