@@ -70,6 +70,8 @@ module GamesHelper
     end
   end
 
+# POTENTIAL DELETE?
+
   def turn(game)
     if game.moves.length == 0 || game.moves.length.even?
       current_player_id = game.player1_id
